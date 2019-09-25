@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="raylee-blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言：作为野生程序员，总是提到堆栈，堆栈，其实长久以来并不理解其真正的区别，今天深入学习之后，记录记录，加深记忆！！！  堆栈的区分 0x00、写代码的时候所说的堆与栈 栈，一种先进后出（FILO）的数据结构，如同一个箱子，往里面放书进去，想要拿到箱子底部的那本书就必须把上面的书全部取出来之后才能拿到。 堆, 一种经过排序的树形数据结构，每个结点都有一个值。通常我们所说的堆的数据结构，是指二叉堆">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm Note --- 堆与栈">
+<meta property="og:url" content="http://rayleeafar.github.io/2019/03/18/yuque/Algorithm Note --- 堆与栈/index.html">
+<meta property="og:site_name" content="raylee-blog">
+<meta property="og:description" content="前言：作为野生程序员，总是提到堆栈，堆栈，其实长久以来并不理解其真正的区别，今天深入学习之后，记录记录，加深记忆！！！  堆栈的区分 0x00、写代码的时候所说的堆与栈 栈，一种先进后出（FILO）的数据结构，如同一个箱子，往里面放书进去，想要拿到箱子底部的那本书就必须把上面的书全部取出来之后才能拿到。 堆, 一种经过排序的树形数据结构，每个结点都有一个值。通常我们所说的堆的数据结构，是指二叉堆">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/247315/1552962787020-69349847-7e3e-410e-9443-391832473e35.png#align=left&display=inline&height=418&name=2474121-e6e531010176eb33.png&originHeight=599&originWidth=1070&size=39270&status=done&width=746">
+<meta property="og:updated_time" content="2019-09-25T01:24:17.732Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Algorithm Note --- 堆与栈">
+<meta name="twitter:description" content="前言：作为野生程序员，总是提到堆栈，堆栈，其实长久以来并不理解其真正的区别，今天深入学习之后，记录记录，加深记忆！！！  堆栈的区分 0x00、写代码的时候所说的堆与栈 栈，一种先进后出（FILO）的数据结构，如同一个箱子，往里面放书进去，想要拿到箱子底部的那本书就必须把上面的书全部取出来之后才能拿到。 堆, 一种经过排序的树形数据结构，每个结点都有一个值。通常我们所说的堆的数据结构，是指二叉堆">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/247315/1552962787020-69349847-7e3e-410e-9443-391832473e35.png#align=left&display=inline&height=418&name=2474121-e6e531010176eb33.png&originHeight=599&originWidth=1070&size=39270&status=done&width=746">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://rayleeafar.github.io/2019/03/18/yuque/Algorithm Note --- 堆与栈/">
+
+
+
+
+
+  <title>Algorithm Note --- 堆与栈 | raylee-blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0fc1f02a13f39da04e51382ac04c7faf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">raylee-blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep walking</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://rayleeafar.github.io/2019/03/18/yuque/Algorithm Note --- 堆与栈/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ray Lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="raylee-blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Algorithm Note --- 堆与栈</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-18T15:45:36+00:00">
+                2019-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a name="141f3596"></a></p>
+<h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>作为野生程序员，总是提到堆栈，堆栈，其实长久以来并不理解其真正的区别，今天深入学习之后，记录记录，加深记忆！！！</p>
+<p><a name="a990b365"></a></p>
+<h3 id="堆栈的区分"><a href="#堆栈的区分" class="headerlink" title="堆栈的区分"></a>堆栈的区分</h3><p><a name="b756be60"></a></p>
+<h4 id="0x00、写代码的时候所说的堆与栈"><a href="#0x00、写代码的时候所说的堆与栈" class="headerlink" title="0x00、写代码的时候所说的堆与栈"></a>0x00、写代码的时候所说的堆与栈</h4><ul>
+<li><strong>栈</strong>，一种<strong>先进后出（FILO）的数据结构</strong>，如同一个箱子，往里面放书进去，想要拿到箱子底部的那本书就必须把上面的书全部取出来之后才能拿到。</li>
+<li><strong>堆</strong>, 一种<strong>经过排序的树形数据结构</strong>，每个结点都有一个值。通常我们所说的堆的数据结构，是指二叉堆。堆的特点是根结点的值最小或最大（因此也有最小堆和最大堆之分），且根结点的两个子树也是一个堆。由于堆的这个特性，常用来实现优先队列，堆的存取是随意，就像一栋大楼的不同单元，每层又像一个子树，知道楼栋单元号就可以直接去拜访，而不需要一层一层的找</li>
+</ul>
+<hr>
+<p><a name="995d464c"></a></p>
+<h4 id="0x01、计算机内存分配上所说的堆与栈–堆区与栈区"><a href="#0x01、计算机内存分配上所说的堆与栈–堆区与栈区" class="headerlink" title="0x01、计算机内存分配上所说的堆与栈–堆区与栈区"></a>0x01、计算机内存分配上所说的堆与栈–堆区与栈区</h4><p>以C语言程序内存分配为例，这里所说的堆和栈就是指计算机内存中的堆区和栈区，我们知道程序在运行时需要将代码拷贝到内存中执行，计算机系统会在内存中分配空间来分别存储代码运行时所需的不同信息：<br>栈区和堆区就是其中两个空间。除此之外，还有BSS段、数据段、代码段等分区。<br><img src="https://cdn.nlark.com/yuque/0/2019/png/247315/1552962787020-69349847-7e3e-410e-9443-391832473e35.png#align=left&amp;display=inline&amp;height=418&amp;name=2474121-e6e531010176eb33.png&amp;originHeight=599&amp;originWidth=1070&amp;size=39270&amp;status=done&amp;width=746" alt="2474121-e6e531010176eb33.png"><br></p>
+<ul>
+<li><strong>栈区、作为内存中存储结构，通常存放程序临时创建的局部变量</strong>，即函数括大括号 “{ }” 中定义的变量，其中还包括函数调用时其形参，调用后的返回值等。 <strong>栈是由到高地址向低地址扩展的数据结构</strong>。即依次定义两个局部变量，首先定义的变量的地址是高地址，其次变量的地址是低地址。<strong>栈还具有“小内存、自动化、可能会溢出”的特点</strong>。栈顶的地址和栈的最大容量一般是系统预先规定好的，通常不会太大。由于栈中主要存放的是局部变量，而局部变量的占用的内存空间是其所在的代码段或函数段结束时由系统回收重新利用，所以栈的空间是循环利用自动管理的，一般不需要人为操作。如果某次局部变量申请的空间超过栈的剩余空间时就有可能出现 “栈的溢出”，进而导致意想不到的后果。所以一般不宜在栈中申请过大的空间，比如长度很大的数组、递归调用重复次数很多的函数等等。</li>
+<li><strong>堆区</strong>、<strong>通常存放程序运行中动态分配的存储空间。堆是低地址向高地址扩展的数据结构，是一块不连续的内存区域。</strong>在标准C语言上，使用malloc等内存分配函数是从堆中分配内存的，在Objective-C中，使用new创建的对象也是从堆中分配内存的。<br><strong>堆具有“大内存、手工分配管理、申请大小随意、可能会泄露”的特点</strong>，堆内存是操作系统划分给堆管理器来管理的，管理器向使用者（用户进程）提供API（malloc和free等）来使用堆内存。需要程序员手动分配释放，如果程序员在使用完申请后的堆内存却没有及时把它释放掉，那么这块内存就丢失了（进程自身认为该内存没被使用，但是在堆内存记录中该内存仍然属于这个进程，所以当需要分配空间时又会重新去申请新的内存而不是重复利用这块内存），就是我们常说的-<strong>内存泄漏</strong>，所以内存泄漏指的是堆内存被泄露了。</li>
+<li><strong>BSS段、</strong><br>Block Started by Symbol的简称，通常是指用来存放程序中未初始化的全局变量和静态变量。</li>
+<li><strong>数据段、</strong> 通常是指用来存放程序中已初始化的全局变量和静态变量以及字符串常量</li>
+<li><strong>代码段、</strong><br>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定。<br><a name="02256044"></a><h4 id="0x03、典型关于各种变量在内存中分配位置的例子"><a href="#0x03、典型关于各种变量在内存中分配位置的例子" class="headerlink" title="0x03、典型关于各种变量在内存中分配位置的例子"></a>0x03、典型关于各种变量在内存中分配位置的例子</h4><blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;                  <span class="comment">// 全局初始化区</span></span><br><span class="line"><span class="keyword">char</span> p1;                    <span class="comment">// 全局未初始化区</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> b ;                 <span class="comment">// 栈</span></span><br><span class="line">      <span class="keyword">char</span> s[] = <span class="string">"abc"</span>;       <span class="comment">// 栈</span></span><br><span class="line">      <span class="keyword">char</span> p2 ;               <span class="comment">// 栈</span></span><br><span class="line">      <span class="keyword">char</span> p3 = <span class="string">"123456"</span>;     <span class="comment">// 123456在常量区，p3在栈上。</span></span><br><span class="line">      <span class="keyword">static</span> <span class="keyword">int</span> c = <span class="number">0</span> ;      <span class="comment">// 全局（静态）初始化区</span></span><br><span class="line">      p1 = (<span class="keyword">char</span> )<span class="built_in">malloc</span>(<span class="number">10</span>); <span class="comment">// 分配的10字节的区域就在堆区</span></span><br><span class="line">      p2 = (<span class="keyword">char</span> )<span class="built_in">malloc</span>(<span class="number">20</span>); <span class="comment">// 分配的20字节的区域就在堆区</span></span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%p\n"</span>,p1);      <span class="comment">// 0xffffffb0</span></span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%p\n"</span>,p2);      <span class="comment">// 0xffffffc0</span></span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;                </span><br><span class="line"><span class="comment">//p1 变量的地址 0xffffffb0 比 p2 变量的地址 0xffffffc0 要小</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<hr>
+<p><a name="044d05f6"></a></p>
+<h3 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h3><p><a href="https://www.cnblogs.com/jiahuafu/p/8575044.html" target="_blank" rel="noopener">https://www.cnblogs.com/jiahuafu/p/8575044.html</a><br><a href="">https://www.jianshu.com/p/b2380e47d005</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/16/yuque/WIN10 专业版激活/" rel="next" title="WIN10 专业版激活">
+                <i class="fa fa-chevron-left"></i> WIN10 专业版激活
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/19/yuque/Git Note--git submodule usage/" rel="prev" title="Git Note--git submodule usage">
+                Git Note--git submodule usage <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Ray Lee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#堆栈的区分"><span class="nav-number">1.1.</span> <span class="nav-text">堆栈的区分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x00、写代码的时候所说的堆与栈"><span class="nav-number">1.1.1.</span> <span class="nav-text">0x00、写代码的时候所说的堆与栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x01、计算机内存分配上所说的堆与栈–堆区与栈区"><span class="nav-number">1.1.2.</span> <span class="nav-text">0x01、计算机内存分配上所说的堆与栈–堆区与栈区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x03、典型关于各种变量在内存中分配位置的例子"><span class="nav-number">1.1.3.</span> <span class="nav-text">0x03、典型关于各种变量在内存中分配位置的例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接："><span class="nav-number">1.2.</span> <span class="nav-text">参考链接：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray Lee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

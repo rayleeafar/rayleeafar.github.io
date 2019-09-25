@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="raylee-blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言:最近项目需求，需要多个外网ip地址，防止一些梯子或爬虫项目被封。又不想开多个云服务器，浪费资源，正好腾讯云的CVM的弹性网卡支持单网卡多辅助IP，遂以此出发，为云主机绑定了4个不同的外网IP，网上搜到的资源都是教配置Fedora系统的，我用的ubuntu16.04为服务器的系统，有点不同，所以记录下来，希望能对一些朋友有帮助～～  一、创建云主机并绑定弹性网卡创建云主机后一定要将默认的网卡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="腾讯云服务器(CVM主机 Ubuntu系统)一个弹性网卡绑定多个IP地址的方法">
+<meta property="og:url" content="http://rayleeafar.github.io/2019/01/20/yuque/腾讯云服务器(CVM主机 Ubuntu系统)一个弹性网卡绑定多个IP地址的方法/index.html">
+<meta property="og:site_name" content="raylee-blog">
+<meta property="og:description" content="前言:最近项目需求，需要多个外网ip地址，防止一些梯子或爬虫项目被封。又不想开多个云服务器，浪费资源，正好腾讯云的CVM的弹性网卡支持单网卡多辅助IP，遂以此出发，为云主机绑定了4个不同的外网IP，网上搜到的资源都是教配置Fedora系统的，我用的ubuntu16.04为服务器的系统，有点不同，所以记录下来，希望能对一些朋友有帮助～～  一、创建云主机并绑定弹性网卡创建云主机后一定要将默认的网卡">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/247315/1547954451888-f50ffe9b-968b-44e3-9c48-a207463ce77e.png#align=left&display=inline&height=355&name=Screenshot%20from%202019-01-20%2011-20-41.png&originHeight=810&originWidth=1703&size=201652&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/247315/1547957740589-36953495-9ad2-4fb1-8a29-043a222938b4.png#align=left&display=inline&height=90&name=Screenshot%20from%202019-01-20%2011-21-59.png&originHeight=223&originWidth=1839&size=62445&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/247315/1547957755266-539f1446-0038-4c77-8ee0-dfc1a13d338c.png#align=left&display=inline&height=358&name=Screenshot%20from%202019-01-20%2011-29-43.png&originHeight=763&originWidth=1591&size=107012&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/247315/1547957769908-5eb0c302-8987-4c31-b16d-389bce97becd.png#align=left&display=inline&height=239&name=Screenshot%20from%202019-01-20%2012-14-11.png&originHeight=588&originWidth=1837&size=151535&width=746">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/247315/1547957841912-82b94a43-ea74-4b66-9b1f-c323d44a08c6.png#align=left&display=inline&height=358&name=Screenshot%20from%202019-01-20%2011-29-43.png&originHeight=763&originWidth=1591&size=113734&width=746">
+<meta property="og:updated_time" content="2019-09-25T01:24:17.740Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="腾讯云服务器(CVM主机 Ubuntu系统)一个弹性网卡绑定多个IP地址的方法">
+<meta name="twitter:description" content="前言:最近项目需求，需要多个外网ip地址，防止一些梯子或爬虫项目被封。又不想开多个云服务器，浪费资源，正好腾讯云的CVM的弹性网卡支持单网卡多辅助IP，遂以此出发，为云主机绑定了4个不同的外网IP，网上搜到的资源都是教配置Fedora系统的，我用的ubuntu16.04为服务器的系统，有点不同，所以记录下来，希望能对一些朋友有帮助～～  一、创建云主机并绑定弹性网卡创建云主机后一定要将默认的网卡">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/247315/1547954451888-f50ffe9b-968b-44e3-9c48-a207463ce77e.png#align=left&display=inline&height=355&name=Screenshot%20from%202019-01-20%2011-20-41.png&originHeight=810&originWidth=1703&size=201652&width=746">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://rayleeafar.github.io/2019/01/20/yuque/腾讯云服务器(CVM主机 Ubuntu系统)一个弹性网卡绑定多个IP地址的方法/">
+
+
+
+
+
+  <title>腾讯云服务器(CVM主机 Ubuntu系统)一个弹性网卡绑定多个IP地址的方法 | raylee-blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0fc1f02a13f39da04e51382ac04c7faf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">raylee-blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep walking</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://rayleeafar.github.io/2019/01/20/yuque/腾讯云服务器(CVM主机 Ubuntu系统)一个弹性网卡绑定多个IP地址的方法/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ray Lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="raylee-blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">腾讯云服务器(CVM主机 Ubuntu系统)一个弹性网卡绑定多个IP地址的方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-20T03:07:57+00:00">
+                2019-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a name="add6c4c4"></a></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言:"></a>前言:</h3><p>最近项目需求，需要多个外网ip地址，防止一些梯子或爬虫项目被封。又不想开多个云服务器，浪费资源，正好腾讯云的CVM的弹性网卡支持单网卡多辅助IP，遂以此出发，为云主机绑定了4个不同的外网IP，网上搜到的资源都是教配置Fedora系统的，我用的ubuntu16.04为服务器的系统，有点不同，所以记录下来，希望能对一些朋友有帮助～～</p>
+<p><a name="78c19253"></a></p>
+<h2 id="一、创建云主机并绑定弹性网卡"><a href="#一、创建云主机并绑定弹性网卡" class="headerlink" title="一、创建云主机并绑定弹性网卡"></a>一、创建云主机并绑定弹性网卡</h2><p>创建云主机后一定要将默认的网卡换成弹性网卡，在左边栏有弹性网卡，点开在CVM的对应地理区域创建弹性网卡，没有绑定会提示收费，点击绑定，选中相应的CVM主机就好，附上不同CVM配置能绑定的IP数量：<br><img src="https://cdn.nlark.com/yuque/0/2019/png/247315/1547954451888-f50ffe9b-968b-44e3-9c48-a207463ce77e.png#align=left&amp;display=inline&amp;height=355&amp;name=Screenshot%20from%202019-01-20%2011-20-41.png&amp;originHeight=810&amp;originWidth=1703&amp;size=201652&amp;width=746" alt="Screenshot from 2019-01-20 11-20-41.png"><br>我是1核2G，我绑定了4个IP，舒服，哈哈～～～<br>修改为弹性网卡后，CVM主机如下显示<br><img src="https://cdn.nlark.com/yuque/0/2019/png/247315/1547957740589-36953495-9ad2-4fb1-8a29-043a222938b4.png#align=left&amp;display=inline&amp;height=90&amp;name=Screenshot%20from%202019-01-20%2011-21-59.png&amp;originHeight=223&amp;originWidth=1839&amp;size=62445&amp;width=746" alt="Screenshot from 2019-01-20 11-21-59.png"><br>主IP地址后面会出现<strong> 弹性 </strong>两个字哟～～</p>
+<p><a name="b5d51401"></a></p>
+<h2 id="二、为弹性网卡添加辅助ip"><a href="#二、为弹性网卡添加辅助ip" class="headerlink" title="二、为弹性网卡添加辅助ip"></a>二、为弹性网卡添加辅助ip</h2><p><a name="9beeb14b"></a></p>
+<h4 id="1、先添加内网IP"><a href="#1、先添加内网IP" class="headerlink" title="1、先添加内网IP"></a>1、先添加内网IP</h4><p>点击创建的CVM实例名称，进入实例的详细信息页，选择详细页上的弹性网卡tab，进入到下面的页面<br><img src="https://cdn.nlark.com/yuque/0/2019/png/247315/1547957755266-539f1446-0038-4c77-8ee0-dfc1a13d338c.png#align=left&amp;display=inline&amp;height=358&amp;name=Screenshot%20from%202019-01-20%2011-29-43.png&amp;originHeight=763&amp;originWidth=1591&amp;size=107012&amp;width=746" alt="Screenshot from 2019-01-20 11-29-43.png"><br>点击右上角分配内网IP，为此网卡添加辅助内网IP，我添加了如下三个，加上主网卡一共4个IP<br><a name="bb083122"></a></p>
+<h4 id="2、为刚添加的内网IP分配外网IP"><a href="#2、为刚添加的内网IP分配外网IP" class="headerlink" title="2、为刚添加的内网IP分配外网IP"></a>2、为刚添加的内网IP分配外网IP</h4><p>添加完内网IP后，点击左侧菜单栏，到弹性网卡，就是最开始为CVM配置弹性网卡的页面，在CVM对应区域添加3个弹性ip，操作和第一步为CVM添加弹性ip一样，创建好就绑定到CVM上，完成后如下图:<br><img src="https://cdn.nlark.com/yuque/0/2019/png/247315/1547957769908-5eb0c302-8987-4c31-b16d-389bce97becd.png#align=left&amp;display=inline&amp;height=239&amp;name=Screenshot%20from%202019-01-20%2012-14-11.png&amp;originHeight=588&amp;originWidth=1837&amp;size=151535&amp;width=746" alt="Screenshot from 2019-01-20 12-14-11.png"><br>回到刚才实例详情页面就能看到之前添加的内网ip后面出现了刚才添加的公网ip了:<br><img src="https://cdn.nlark.com/yuque/0/2019/png/247315/1547957841912-82b94a43-ea74-4b66-9b1f-c323d44a08c6.png#align=left&amp;display=inline&amp;height=358&amp;name=Screenshot%20from%202019-01-20%2011-29-43.png&amp;originHeight=763&amp;originWidth=1591&amp;size=113734&amp;width=746" alt="Screenshot from 2019-01-20 11-29-43.png"><br>3、腾讯云控制台的操作就完成了</p>
+<p><a name="1b46f6ea"></a></p>
+<h2 id="三、Ubuntu系统上的多IP绑定配置"><a href="#三、Ubuntu系统上的多IP绑定配置" class="headerlink" title="三、Ubuntu系统上的多IP绑定配置"></a>三、Ubuntu系统上的多IP绑定配置</h2><p>配置相对Fedora是比较简单的:<br><a name="3866041e"></a></p>
+<h4 id="1、禁用云主机的自动配置"><a href="#1、禁用云主机的自动配置" class="headerlink" title="1、禁用云主机的自动配置"></a>1、禁用云主机的自动配置</h4><p>查看网卡配置</p>
+<blockquote>
+<p>cat /etc/network/interfaces.d/50-cloud-init.cfg</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; cat /etc/network/interfaces.d/50-cloud-init.cfg</span><br><span class="line"></span><br><span class="line"># This file is generated from information provided by</span><br><span class="line"># the datasource.  Changes to it will not persist across an instance.</span><br><span class="line"># To disable cloud-init&apos;s network configuration capabilities, write a file</span><br><span class="line"># /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:</span><br><span class="line"># network: &#123;config: disabled&#125;</span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"></span><br><span class="line">auto eth0</span><br><span class="line">iface eth0 inet dhcp</span><br></pre></td></tr></table></figure>
+<p>上面写着要想自定义网络配置需要禁用掉自带的云初始化，方法是创建文件</p>
+<blockquote>
+<p>/etc/cloud/cloud.cfg.d/99-disable-network-config.cfg</p>
+</blockquote>
+<p>并添加如下内容</p>
+<blockquote>
+<p>network: {config: disabled}</p>
+</blockquote>
+<p>那就照做就是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bash -c &quot;echo &apos;network: &#123;config: disabled&#125;&apos; &gt; /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg&quot;</span><br></pre></td></tr></table></figure></p>
+<p><a name="2a8212a0"></a></p>
+<h4 id="2、手动配置我们的网卡信息"><a href="#2、手动配置我们的网卡信息" class="headerlink" title="2、手动配置我们的网卡信息"></a>2、手动配置我们的网卡信息</h4><p>主要是修改网络接口配置文件</p>
+<blockquote>
+<p>vim  /etc/network/interfaces</p>
+</blockquote>
+<p>需要的内容一定要照着控制台显示的各个内网IP填，网关和子网掩码用</p>
+<blockquote>
+<p>route</p>
+</blockquote>
+<p>查看确认，我一直以为子网掩码用255.255.255.0，结果我一看却是255.255.240.0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; route</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">default         172.16.0.1      0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">172.16.0.0      *               255.255.240.0   U     0      0        0 eth0</span><br></pre></td></tr></table></figure></p>
+<p>添加如下内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># This file describes the network interfaces available on your system</span><br><span class="line"># and how to activate them. For more information, see interfaces(5).</span><br><span class="line"></span><br><span class="line">#source /etc/network/interfaces.d/* 注释掉原来的配置</span><br><span class="line"></span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"># The primary network interface</span><br><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 172.16.0.6     #主网卡的内网IP</span><br><span class="line">netmask 255.255.240.0  #子网掩码</span><br><span class="line">gateway 172.16.0.1     #网关，一般为内网第一个.1的IP</span><br><span class="line"></span><br><span class="line"># more side ip</span><br><span class="line">auto eth0:1            #辅助IP的网卡名，自己定义，这样写比较表意</span><br><span class="line">iface eth0:1 inet static</span><br><span class="line">address 172.16.0.4     #辅助IP的内网IP</span><br><span class="line">netmask 255.255.240.0</span><br><span class="line">gateway 172.16.0.1</span><br><span class="line"></span><br><span class="line">auto eth0:2</span><br><span class="line">iface eth0:2 inet static</span><br><span class="line">address 172.16.0.8</span><br><span class="line">netmask 255.255.240.0</span><br><span class="line">gateway 172.16.0.1</span><br><span class="line"></span><br><span class="line">auto eth0:3</span><br><span class="line">iface eth0:3 inet static</span><br><span class="line">address 172.16.0.17</span><br><span class="line">netmask 255.255.240.0</span><br><span class="line">gateway 172.16.0.1</span><br></pre></td></tr></table></figure></p>
+<p>保存退出，基本完工<br><a name="c93d622b"></a></p>
+<h2 id="四、重启查看并测试"><a href="#四、重启查看并测试" class="headerlink" title="四、重启查看并测试"></a>四、重启查看并测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr *********** </span><br><span class="line">          inet addr:172.16.0.6  Bcast:172.16.15.255  Mask:255.255.240.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:87641 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:87248 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000 </span><br><span class="line">          RX bytes:5342944 (5.3 MB)  TX bytes:5588316 (5.5 MB)</span><br><span class="line"></span><br><span class="line">eth0:1    Link encap:Ethernet  HWaddr ***********  </span><br><span class="line">          inet addr:172.16.0.4  Bcast:172.16.15.255  Mask:255.255.240.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line"></span><br><span class="line">eth0:2    Link encap:Ethernet  HWaddr *********** </span><br><span class="line">          inet addr:172.16.0.8  Bcast:172.16.15.255  Mask:255.255.240.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line"></span><br><span class="line">eth0:3    Link encap:Ethernet  HWaddr *********** </span><br><span class="line">          inet addr:172.16.0.17  Bcast:172.16.15.255  Mask:255.255.240.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback  </span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1 </span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
+<p>成功撒花，愉快的开始其它的业务吧～～～～</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/17/yuque/详细Hexo博客搭建：云端写作+自动构建+自动部署/" rel="next" title="详细Hexo博客搭建：云端写作+自动构建+自动部署">
+                <i class="fa fa-chevron-left"></i> 详细Hexo博客搭建：云端写作+自动构建+自动部署
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/22/yuque/升级Ubuntu18.04的linux kernel(修复小米游戏本的触摸板驱动问题)/" rel="prev" title="升级Ubuntu18.04的linux kernel(修复小米游戏本的触摸板驱动问题)">
+                升级Ubuntu18.04的linux kernel(修复小米游戏本的触摸板驱动问题) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Ray Lee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言:</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#一、创建云主机并绑定弹性网卡"><span class="nav-number"></span> <span class="nav-text">一、创建云主机并绑定弹性网卡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、为弹性网卡添加辅助ip"><span class="nav-number"></span> <span class="nav-text">二、为弹性网卡添加辅助ip</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、先添加内网IP"><span class="nav-number">0.1.</span> <span class="nav-text">1、先添加内网IP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、为刚添加的内网IP分配外网IP"><span class="nav-number">0.2.</span> <span class="nav-text">2、为刚添加的内网IP分配外网IP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Ubuntu系统上的多IP绑定配置"><span class="nav-number"></span> <span class="nav-text">三、Ubuntu系统上的多IP绑定配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、禁用云主机的自动配置"><span class="nav-number">0.1.</span> <span class="nav-text">1、禁用云主机的自动配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、手动配置我们的网卡信息"><span class="nav-number">0.2.</span> <span class="nav-text">2、手动配置我们的网卡信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、重启查看并测试"><span class="nav-number"></span> <span class="nav-text">四、重启查看并测试</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray Lee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="raylee-blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="YuQue云端写作+Travis-ci自动构建+github-pages发布序言：在网上看见Nero大神的一篇文章https://segmentfault.com/a/1190000017797561，简单讲述了如何构建一个云端写作自动部署到github pages的hexo 静态博客网站，之前我已经在github pages上搭建了一个博客，无奈觉得每次写作非常不方便，用代码编辑器vs cod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详细Hexo博客搭建：云端写作+自动构建+自动部署">
+<meta property="og:url" content="http://rayleeafar.github.io/2019/01/17/yuque/详细Hexo博客搭建：云端写作+自动构建+自动部署/index.html">
+<meta property="og:site_name" content="raylee-blog">
+<meta property="og:description" content="YuQue云端写作+Travis-ci自动构建+github-pages发布序言：在网上看见Nero大神的一篇文章https://segmentfault.com/a/1190000017797561，简单讲述了如何构建一个云端写作自动部署到github pages的hexo 静态博客网站，之前我已经在github pages上搭建了一个博客，无奈觉得每次写作非常不方便，用代码编辑器vs cod">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/247315/1547704531539-87c973b8-fa2f-4d8f-bc18-1f9b2c7d796c.png#align=left&display=inline&height=423&name=Screenshot%20from%202019-01-17%2013-55-04.png&originHeight=722&originWidth=1199&size=47422&width=703">
+<meta property="og:updated_time" content="2019-09-25T01:24:17.720Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="详细Hexo博客搭建：云端写作+自动构建+自动部署">
+<meta name="twitter:description" content="YuQue云端写作+Travis-ci自动构建+github-pages发布序言：在网上看见Nero大神的一篇文章https://segmentfault.com/a/1190000017797561，简单讲述了如何构建一个云端写作自动部署到github pages的hexo 静态博客网站，之前我已经在github pages上搭建了一个博客，无奈觉得每次写作非常不方便，用代码编辑器vs cod">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/247315/1547704531539-87c973b8-fa2f-4d8f-bc18-1f9b2c7d796c.png#align=left&display=inline&height=423&name=Screenshot%20from%202019-01-17%2013-55-04.png&originHeight=722&originWidth=1199&size=47422&width=703">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://rayleeafar.github.io/2019/01/17/yuque/详细Hexo博客搭建：云端写作+自动构建+自动部署/">
+
+
+
+
+
+  <title>详细Hexo博客搭建：云端写作+自动构建+自动部署 | raylee-blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0fc1f02a13f39da04e51382ac04c7faf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">raylee-blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep walking</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://rayleeafar.github.io/2019/01/17/yuque/详细Hexo博客搭建：云端写作+自动构建+自动部署/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ray Lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="raylee-blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">详细Hexo博客搭建：云端写作+自动构建+自动部署</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-17T08:26:03+00:00">
+                2019-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a name="435f48df"></a></p>
+<h1 id="YuQue云端写作-Travis-ci自动构建-github-pages发布"><a href="#YuQue云端写作-Travis-ci自动构建-github-pages发布" class="headerlink" title="YuQue云端写作+Travis-ci自动构建+github-pages发布"></a>YuQue云端写作+Travis-ci自动构建+github-pages发布</h1><p><strong>序言：</strong>在网上看见Nero大神的一篇文章<a href="https://segmentfault.com/a/1190000017797561" target="_blank" rel="noopener">https://segmentfault.com/a/1190000017797561</a>，简单讲述了如何构建一个云端写作自动部署到github pages的hexo 静态博客网站，之前我已经在github pages上搭建了一个博客，无奈觉得每次写作非常不方便，用代码编辑器vs code写md文档然后手动生成静态再部署，写作环境实在太差，之后便放弃直接在CSDN上写了。看到上面那篇文章，顿觉激动，在语雀这样方便的平台上编写文档，自动部署，简直爽翻，遂动手开干，花了半天的时间搞定。由于大神写的过于简略，途中遇到不少坑，遂填坑出一个完整的搭建流程</p>
+<p><strong>结果：</strong></p>
+<ul>
+<li>我已搭建好的博客： <a href="https://rayleeafar.github.io/">https://rayleeafar.github.io/</a>  </li>
+<li>发布博客静态页面的仓库： <a href="https://github.com/rayleeafar/rayleeafar.github.io" target="_blank" rel="noopener">https://github.com/rayleeafar/rayleeafar.github.io</a></li>
+<li>博客源码的仓库： <a href="https://github.com/rayleeafar/rayleeafar-blog" target="_blank" rel="noopener">https://github.com/rayleeafar/rayleeafar-blog</a></li>
+</ul>
+<p>有问题可以参考源码里面的配置</p>
+<p><a name="4efa5655"></a></p>
+<h3 id="搭建步骤："><a href="#搭建步骤：" class="headerlink" title="搭建步骤："></a>搭建步骤：</h3><p><a name="33534374"></a></p>
+<h4 id="一、GitHub-pages-Hexo-搭建初级个人博客"><a href="#一、GitHub-pages-Hexo-搭建初级个人博客" class="headerlink" title="一、GitHub pages + Hexo 搭建初级个人博客"></a>一、GitHub pages + Hexo 搭建初级个人博客</h4><p>参考文章：  </p>
+<ul>
+<li>初始化GitHub pages:  <a href="https://pages.github.com/" target="_blank" rel="noopener">https://pages.github.com/</a>  </li>
+<li>安装hexo及相关依赖:  <a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/</a></li>
+<li>在第一步的GH-pages仓库目录中初始化hexo: <a href="https://hexo.io/zh-cn/docs/setup" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/setup</a>  </li>
+<li>开始写作: <a href="https://hexo.io/zh-cn/docs/writing" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/writing</a></li>
+<li>部署到github pages: <a href="https://hexo.io/zh-cn/docs/deployment" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/deployment</a></li>
+</ul>
+<p><a name="6f916c59"></a></p>
+<h4 id="二、GitHub-pages-Hexo-travis-ci-搭建中级-CI自动部署博客"><a href="#二、GitHub-pages-Hexo-travis-ci-搭建中级-CI自动部署博客" class="headerlink" title="二、GitHub pages + Hexo + travis-ci 搭建中级 CI自动部署博客"></a>二、GitHub pages + Hexo + travis-ci 搭建中级 CI自动部署博客</h4><p>主要步骤参考: <a href="https://segmentfault.com/a/1190000004667156#articleHeader1" target="_blank" rel="noopener">https://segmentfault.com/a/1190000004667156#articleHeader1</a><br>其中需要注意的几点是:</p>
+<ul>
+<li><p>文章需要安装Ruby，才能使用gem 安装travis工具 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ruby</span><br><span class="line">gem install travis</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成ssh-key的过程有点问题，按照文章ci部署的时候会报错 vi undefine，正确步骤是用以下命令登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd path/to/your/repo/.travis</span><br><span class="line">ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</span><br><span class="line">travis login --pro #用github账号登录</span><br><span class="line">travis encrypt-file id_rsa --pro</span><br><span class="line">#得到  openssl aes-256-cbc -K $encrypted_xxxxxxxxxxx_key -iv $encrypted_xxxxxxxxxxx_iv</span><br><span class="line">#其中 id_rsa.enc的位置需要注意设置对</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注意以上两个点，按照文章步骤申请travis账号开通repo权限就能完成部署了</p>
+<p><a name="4b096a56"></a></p>
+<h4 id="三、GitHub-pages-Hexo-travis-ci-YuQue-Serverless搭建高级-云端写作-gt-自动部署博客"><a href="#三、GitHub-pages-Hexo-travis-ci-YuQue-Serverless搭建高级-云端写作-gt-自动部署博客" class="headerlink" title="三、GitHub pages + Hexo + travis-ci + YuQue + Serverless搭建高级 云端写作-&gt;自动部署博客"></a>三、GitHub pages + Hexo + travis-ci + YuQue + Serverless搭建高级 云端写作-&gt;自动部署博客</h4><p>步骤参考文章:</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000017797561" target="_blank" rel="noopener">https://segmentfault.com/a/1190000017797561</a></li>
+</ul>
+<p>按照大神的文章走，主要注意以下几点，找到并设置对各个参数</p>
+<ul>
+<li>YuQue-hexo库的使用  <a href="https://github.com/x-cold/yuque-hexo" target="_blank" rel="noopener">https://github.com/x-cold/yuque-hexo</a></li>
+<li>修改package.json，增加配置:  </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"yuqueConfig"</span>: &#123;</span><br><span class="line">  <span class="string">"baseUrl"</span>: <span class="string">"https://www.yuque.com/api/v2"</span>,</span><br><span class="line">  <span class="string">"login"</span>: <span class="string">"rayleeafar"</span>,<span class="comment">#填写你的语雀账号名称</span></span><br><span class="line">  <span class="string">"repo"</span>: <span class="string">"gg272k"</span>,<span class="comment">#填写在语雀上创建的文章仓库的编号一般是几个字母数字，你也可以自己改，下图中路径最后的那个值</span></span><br><span class="line">  <span class="string">"mdNameFormat"</span>: <span class="string">"title"</span>,</span><br><span class="line">  <span class="string">"postPath"</span>: <span class="string">"source/_posts/yuque"</span></span><br><span class="line">&#125;,</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">  <span class="string">"sync"</span>: <span class="string">"yuque-hexo sync"</span>,</span><br><span class="line">  <span class="string">"clean:yuque"</span>: <span class="string">"yuque-hexo clean"</span>,</span><br><span class="line">  <span class="string">"deploy"</span>: <span class="string">"npm run sync &amp;&amp; hexo clean &amp;&amp; hexo g -d"</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><img src="https://cdn.nlark.com/yuque/0/2019/png/247315/1547704531539-87c973b8-fa2f-4d8f-bc18-1f9b2c7d796c.png#align=left&amp;display=inline&amp;height=423&amp;name=Screenshot%20from%202019-01-17%2013-55-04.png&amp;originHeight=722&amp;originWidth=1199&amp;size=47422&amp;width=703" alt="Screenshot from 2019-01-17 13-55-04.png"><br><a name="90e7bd5b"></a></p>
+<h5 id="serverless-函数中参数的设置"><a href="#serverless-函数中参数的设置" class="headerlink" title="* serverless 函数中参数的设置:"></a>* serverless 函数中参数的设置:</h5><p>文章中说用postman发个请求，也可以用curl: <br>再返回的数据中找到repo的id，我的是：7596310<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -H &quot;Travis-API-Version: 3&quot; -H &quot;User-Agent: API Explorer&quot; \ -H &quot;Authorization: token &lt;your_token&gt;&quot; \ https://api.travis-ci.org/owner/&lt;your_name&gt;/repos</span><br><span class="line">#curl的返回信息</span><br><span class="line">......</span><br><span class="line">  &quot;repositories&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;@type&quot;: &quot;repository&quot;,</span><br><span class="line">      &quot;@href&quot;: &quot;/repo/7596310&quot;,</span><br><span class="line">      &quot;@representation&quot;: &quot;standard&quot;,</span><br><span class="line">      &quot;@permissions&quot;: &#123;</span><br><span class="line">        &quot;read&quot;: true,</span><br><span class="line">        &quot;migrate&quot;: true,</span><br><span class="line">        &quot;star&quot;: true,</span><br><span class="line">        &quot;unstar&quot;: true,</span><br><span class="line">        &quot;create_cron&quot;: true,</span><br><span class="line">        &quot;create_env_var&quot;: true,</span><br><span class="line">        &quot;create_key_pair&quot;: true,</span><br><span class="line">        &quot;delete_key_pair&quot;: true,</span><br><span class="line">        &quot;create_request&quot;: true,</span><br><span class="line">        &quot;admin&quot;: true,</span><br><span class="line">        &quot;activate&quot;: true,</span><br><span class="line">        &quot;deactivate&quot;: true</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;id&quot;: 7596310,</span><br><span class="line">      &quot;name&quot;: &quot;rayleeafar-blog&quot;,</span><br><span class="line">      &quot;slug&quot;: &quot;rayleeafar/rayleeafar-blog&quot;,</span><br><span class="line">      &quot;description&quot;: null,</span><br><span class="line">      &quot;github_id&quot;: 166050465,</span><br><span class="line">      &quot;github_language&quot;: null,</span><br><span class="line">      &quot;active&quot;: true,</span><br><span class="line">      &quot;private&quot;: false,</span><br><span class="line">      &quot;owner&quot;: &#123;</span><br><span class="line">        &quot;@type&quot;: &quot;user&quot;,</span><br><span class="line">        &quot;id&quot;: 1254643,</span><br><span class="line">        &quot;login&quot;: &quot;rayleeafar&quot;,</span><br><span class="line">        &quot;@href&quot;: &quot;/user/1254643&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我申请的是腾讯的serverless服务，在腾讯云上注册登录，创建函数服务:</p>
+<p>  用下面这个函数，作者的那个里面 有个接口地址有点不同，我抓travis看到接口URL是另一个：</p>
+<blockquote>
+<p>curl_setopt($curl, CURLOPT_URL, ‘<strong><a href="https://api.travis-ci.com" target="_blank" rel="noopener">https://api.travis-ci.com</a></strong>/repo/‘.$repos.’/requests’);</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main_handler</span><span class="params">($event, $context)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 解析语雀post的数据</span></span><br><span class="line">    $update_title = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">if</span>($event-&gt;body)&#123;</span><br><span class="line">        $yuque_data= json_decode($event-&gt;body);</span><br><span class="line">        $update_title .= $yuque_data-&gt;data-&gt;title;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// default params</span></span><br><span class="line">    $repos = <span class="string">'7596310'</span>;  <span class="comment">// 你的仓库id 或 slug</span></span><br><span class="line">    $token = <span class="string">'yJsKEMoSNUmQSv9kLFsbvg'</span>; <span class="comment">// 你的登录token</span></span><br><span class="line">    $message = date(<span class="string">"Y/m/d"</span>).<span class="string">':yuque update:'</span>.$update_title;</span><br><span class="line">    $branch = <span class="string">'master'</span>;</span><br><span class="line">    <span class="comment">// post params</span></span><br><span class="line">    $queryString = $event-&gt;queryString;</span><br><span class="line">    $q_token = $queryString-&gt;token ? $queryString-&gt;token : $token;</span><br><span class="line">    $q_repos = $queryString-&gt;repos ? $queryString-&gt;repos : $repos;</span><br><span class="line">    $q_message = $queryString-&gt;message ? $queryString-&gt;message : $message;</span><br><span class="line">    $q_branch = $queryString-&gt;branch ? $queryString-&gt;branch : <span class="string">'master'</span>;</span><br><span class="line">    <span class="keyword">echo</span>($q_token);</span><br><span class="line">    <span class="keyword">echo</span>(<span class="string">'==='</span>);</span><br><span class="line">    <span class="keyword">echo</span> ($q_repos);</span><br><span class="line">    <span class="keyword">echo</span> (<span class="string">'==='</span>);</span><br><span class="line">    <span class="keyword">echo</span> ($q_message);</span><br><span class="line">    <span class="keyword">echo</span> (<span class="string">'==='</span>);</span><br><span class="line">    <span class="keyword">echo</span> ($q_branch);</span><br><span class="line">    <span class="keyword">echo</span> (<span class="string">'==='</span>);</span><br><span class="line">    <span class="comment">//request travis ci</span></span><br><span class="line">    $res_info = triggerTravisCI($q_repos, $q_token, $q_message, $q_branch);</span><br><span class="line"></span><br><span class="line">    $res_code = <span class="number">0</span>;</span><br><span class="line">    $res_message = <span class="string">'未知'</span>;</span><br><span class="line">    <span class="keyword">if</span>($res_info[<span class="string">'http_code'</span>])&#123;</span><br><span class="line">        $res_code = $res_info[<span class="string">'http_code'</span>];</span><br><span class="line">        <span class="keyword">switch</span>($res_info[<span class="string">'http_code'</span>])&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">200</span>:</span><br><span class="line">            <span class="keyword">case</span> <span class="number">202</span>:</span><br><span class="line">                $res_message = <span class="string">'success'</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                $res_message = <span class="string">'faild'</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    $res = <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'status'</span>=&gt;$res_code,</span><br><span class="line">        <span class="string">'message'</span>=&gt;$res_message</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> $res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@description</span>  travis api , trigger a build</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> $repos string 仓库ID、slug</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> $token string 登录验证token</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> $message string 触发信息</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> $branch string 分支</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span> $info array 回包信息</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">triggerTravisCI</span> <span class="params">($repos, $token, $message=<span class="string">'yuque update'</span>, $branch=<span class="string">'master'</span>)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">    $curl = curl_init();</span><br><span class="line">    <span class="comment">//设置抓取的url https://api.travis-ci.com/repo/7596310/requests</span></span><br><span class="line">    curl_setopt($curl, CURLOPT_URL, <span class="string">'https://api.travis-ci.com/repo/'</span>.$repos.<span class="string">'/requests'</span>);</span><br><span class="line">    <span class="comment">//设置获取的信息以文件流的形式返回，而不是直接输出。</span></span><br><span class="line">    curl_setopt($curl, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);</span><br><span class="line">    <span class="comment">//设置post方式提交</span></span><br><span class="line">    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, <span class="string">"POST"</span>);</span><br><span class="line">    <span class="comment">//设置post数据</span></span><br><span class="line">    $post_data = json_encode(<span class="keyword">array</span>(</span><br><span class="line">        <span class="string">"request"</span>=&gt; <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">"message"</span>=&gt;$message,</span><br><span class="line">            <span class="string">"branch"</span>=&gt;$branch</span><br><span class="line">        )</span><br><span class="line">    ));</span><br><span class="line">    $header = <span class="keyword">array</span>(</span><br><span class="line">      <span class="string">'Content-Type: application/json'</span>,</span><br><span class="line">      <span class="string">'Travis-API-Version: 3'</span>,</span><br><span class="line">      <span class="string">'Authorization:token '</span>.$token,</span><br><span class="line">      <span class="string">'Content-Length:'</span> . strlen($post_data)</span><br><span class="line">    );</span><br><span class="line">    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);</span><br><span class="line">    curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);</span><br><span class="line">    <span class="comment">//执行命令</span></span><br><span class="line">    $data = curl_exec($curl);</span><br><span class="line">    $info = curl_getinfo($curl);</span><br><span class="line">    <span class="comment">//关闭URL请求</span></span><br><span class="line">    curl_close($curl);</span><br><span class="line">    <span class="keyword">return</span> $info;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>按照文章的步骤创建并填对参数应该就事成一大半了</li>
+</ul>
+<p><a name="ae5a7981"></a></p>
+<h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><p>按照上述文章及注意的点走完，试试在语雀上写个文章并发布，登录serverless看看hook有没有触发，登录travis-ci看看构建是否成功，有问题留言联系呀～～<br>祝各位写作愉快～～～～～</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/20/yuque/腾讯云服务器(CVM主机 Ubuntu系统)一个弹性网卡绑定多个IP地址的方法/" rel="prev" title="腾讯云服务器(CVM主机 Ubuntu系统)一个弹性网卡绑定多个IP地址的方法">
+                腾讯云服务器(CVM主机 Ubuntu系统)一个弹性网卡绑定多个IP地址的方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Ray Lee</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#YuQue云端写作-Travis-ci自动构建-github-pages发布"><span class="nav-number">1.</span> <span class="nav-text">YuQue云端写作+Travis-ci自动构建+github-pages发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建步骤："><span class="nav-number">1.0.1.</span> <span class="nav-text">搭建步骤：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、GitHub-pages-Hexo-搭建初级个人博客"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">一、GitHub pages + Hexo 搭建初级个人博客</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、GitHub-pages-Hexo-travis-ci-搭建中级-CI自动部署博客"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">二、GitHub pages + Hexo + travis-ci 搭建中级 CI自动部署博客</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、GitHub-pages-Hexo-travis-ci-YuQue-Serverless搭建高级-云端写作-gt-自动部署博客"><span class="nav-number">1.0.1.3.</span> <span class="nav-text">三、GitHub pages + Hexo + travis-ci + YuQue + Serverless搭建高级 云端写作-&gt;自动部署博客</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#serverless-函数中参数的设置"><span class="nav-number">1.0.1.3.1.</span> <span class="nav-text">* serverless 函数中参数的设置:</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后记"><span class="nav-number">1.0.1.4.</span> <span class="nav-text">后记</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ray Lee</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
